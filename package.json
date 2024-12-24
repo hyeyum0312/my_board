@@ -1,0 +1,48 @@
+{
+  "name": "next-board",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No tests specified\"",
+    "prepare": "husky install",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.62.9",
+    "@tanstack/react-query-devtools": "^5.62.9",
+    "axios": "^1.7.9",
+    "classnames": "^2.5.1",
+    "date-fns": "^4.1.0",
+    "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
+    "msw": "^2.7.0",
+    "next": "14.2.17",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.54.2",
+    "react-toastify": "^11.0.2",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "css-loader": "^7.1.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.17",
+    "husky": "^8.0.0",
+    "json-server": "^1.0.0-beta.3",
+    "lint-staged": "^15.2.11",
+    "orval": "^7.3.0",
+    "postcss-loader": "^8.1.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.ts": "prettier --write"
+  }
+}

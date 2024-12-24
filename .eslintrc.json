@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "next/core-web-vitals", // Next.js 기본 설정
+    "next/typescript", // TypeScript 관련 설정
+    "eslint:recommended", // ESLint 권장 설정
+    "plugin:@typescript-eslint/recommended", // TypeScript 관련 ESLint 규칙
+    "prettier" // Prettier와 충돌하지 않도록 설정
+  ],
+  "parser": "@typescript-eslint/parser", // TypeScript 파일을 ESLint가 이해할 수 있도록 설정
+  "plugins": [
+    "@typescript-eslint" // TypeScript용 ESLint 플러그인
+  ],
+  "rules": {
+    "no-unused-vars": "warn", // 사용하지 않는 변수에 대해 경고
+    "no-console": "warn", // console.log 사용에 대해 경고
+    "@typescript-eslint/no-unused-vars": ["warn"], // TypeScript에서 사용하지 않는 변수에 대해 경고
+    "@typescript-eslint/explicit-module-boundary-types": "off" // 함수 반환 타입 강제 설정 끄기
+  }
+}
