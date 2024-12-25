@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.62.9",
     "@tanstack/react-query-devtools": "^5.62.9",
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
@@ -20,10 +21,13 @@
     "lodash": "^4.17.21",
     "msw": "^2.7.0",
     "next": "14.2.17",
+    "postcss": "^8.4.49",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.54.2",
     "react-toastify": "^11.0.2",
+    "sass": "^1.83.0",
+    "tailwindcss": "^3.4.17",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
