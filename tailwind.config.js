@@ -2,12 +2,18 @@
 module.exports = {
   darkMode: ['class'],
   content: [
+    './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}', // 페이지 컴포넌트
     './components/**/*.{js,ts,jsx,tsx}', // 컴포넌트
     './styles/**/*.{css,scss}', // SCSS 및 CSS 파일 포함
+    './src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
+      screens: {
+        tablet: '576px',
+        laptop: '1024px',
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
