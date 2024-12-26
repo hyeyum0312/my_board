@@ -1,15 +1,15 @@
 import React from 'react';
 
 type Row = {
-  id: number; // 항상 존재하는 필드
+  id: number;
   title: string;
   author: string;
-  date: string; // Row에 정의된 명확한 키를 추가
+  date: string;
 };
 
 type Column = {
-  key: keyof Row; // Row의 키 중 하나만 선택 가능
-  label: string; // 컬럼의 표시 이름
+  key: keyof Row;
+  label: string;
 };
 
 type BoardTableProps = {
