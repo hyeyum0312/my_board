@@ -5,7 +5,7 @@ import { handlers } from './handlers';
 
 const server = setupServer(...handlers);
 
-export function initMocks() {
+export default function initMocks() {
   log('🚧 MSW와 함께 실행됩니다.');
   faker.seed(100);
   server.listen({

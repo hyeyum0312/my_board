@@ -1,7 +1,7 @@
 import { HttpResponse } from 'msw';
-import { makeHandler } from '../utils';
 import { APIEndpoints } from '@/constants/api-end-points';
-import { mockQuestions } from '../data/mock-question';
+import { makeHandler } from '../utils';
+import { mockQuestions } from '@/mocks/data/mock-question';
 
 const { url, method } = APIEndpoints.question.list;
 const questionsHandler = makeHandler({
