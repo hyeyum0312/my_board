@@ -15,6 +15,7 @@ export default function Nav() {
     '/signup',
     '/reset-password',
     '/password-expiration',
+    '/404',
   ];
 
   // pathname이 hideNavPages 배열에 포함되면 네비게이션을 렌더링하지 않음
