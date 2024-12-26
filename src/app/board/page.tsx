@@ -1,6 +1,6 @@
 'use client';
 
-import BoardTable from '@/components/ui/organisms/Table';
+import BoardTable from '@/components/ui/organisms/table/Table';
 import React, { useState } from 'react';
 
 // Row 타입을 명확히 정의

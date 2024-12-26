@@ -1,5 +1,11 @@
 'use client';
 
+import LoginForm from '@/components/ui/organisms/auth/Login.Form';
+
 export default function LoginPage() {
-  return <div>로그인</div>;
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
 }
