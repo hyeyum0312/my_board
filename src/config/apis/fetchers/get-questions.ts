@@ -1,10 +1,10 @@
 'use server';
 
 import { APIEndpoints } from '@/config/apis/api-end-points';
-import { ApiResult } from '../../types/api-result';
-import { QuestionsPresentation } from '../../presentation/questions';
-import { QuestionsResponse } from '../../types/response/questions';
-import { fetchAPI } from '../../fetch-api';
+import { ApiResult } from '../types/api-result';
+import { QuestionsPresentation } from '../presentation/questions';
+import { QuestionsResponse } from '../types/response/questions';
+import { fetchAPI } from '../fetch-api';
 
 const { url } = APIEndpoints.question.list;
 

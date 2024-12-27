@@ -1,23 +1,33 @@
 import { ApiResult } from './types/api-result';
 
-/**
- * Backend API를 호출하는 함수
- * fetch결과 값을 ApiResult로 변환하여 반환
- */
 export const fetchAPI = async <T>(
   url: string,
   reqInit?: RequestInit,
   handleError?: (error: unknown) => ApiResult<T>,
 ): Promise<ApiResult<T>> => {
   try {
+    if (process.env.MOCKING === 'true') {
+      // MOCKING이 true일 때는 MSW에서 데이터를 반환하도록 처리
+      console.log(`Mocking API: ${url}`);
+      const res = await fetch(url, reqInit);
+      const data = (await res.json()) as T;
+      return {
+        status: 'success',
+        data,
+      };
+    }
+
+    // MOCKING이 false일 때는 실제 백엔드 서버에서 데이터를 가져옵니다.
     const res = await fetch(url, reqInit);
+
     if (!res.ok) {
       throw new Error(res.statusText);
     }
+
     const data = (await res.json()) as T;
     return {
-      data: data,
       status: 'success',
+      data,
     };
   } catch (error: unknown) {
     console.error(error);
