@@ -6,30 +6,31 @@ export const fetchAPI = async <T>(
   handleError?: (error: unknown) => ApiResult<T>,
 ): Promise<ApiResult<T>> => {
   try {
-    if (process.env.MOCKING === 'true') {
-      // MOCKING이 true일 때는 MSW에서 데이터를 반환하도록 처리
-      console.log(`Mocking API: ${url}`);
-      const res = await fetch(url, reqInit);
-      const data = (await res.json()) as T;
+    // Correct the base URL when MOCKING is enabled
+    const requestUrl =
+      process.env.MOCKING === 'true'
+        ? `http://localhost:3000${url}` // Assuming local development server is running on port 3000
+        : url;
+
+    const res = await fetch(requestUrl, reqInit);
+
+    // Check if the response is not HTML (status 200) and parse it as JSON
+    if (
+      res.ok &&
+      res.headers.get('Content-Type')?.includes('application/json')
+    ) {
+      const data = await res.json();
       return {
         status: 'success',
         data,
       };
+    } else {
+      // Handle non-JSON responses (e.g., HTML error pages)
+      const text = await res.text();
+      console.error('Error response:', text);
+      throw new Error('Received non-JSON response');
     }
-
-    // MOCKING이 false일 때는 실제 백엔드 서버에서 데이터를 가져옵니다.
-    const res = await fetch(url, reqInit);
-
-    if (!res.ok) {
-      throw new Error(res.statusText);
-    }
-
-    const data = (await res.json()) as T;
-    return {
-      status: 'success',
-      data,
-    };
-  } catch (error: unknown) {
+  } catch (error) {
     console.error(error);
     if (handleError) {
       return handleError(error);
