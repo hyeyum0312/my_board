@@ -1,4 +1,4 @@
-import { ServerEnv } from '@/constants/server-env';
+import { ServerEnv } from '@/config/env/server-env';
 
 const baseUrl = ServerEnv.backendUrl;
 

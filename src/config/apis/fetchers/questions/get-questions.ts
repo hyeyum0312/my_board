@@ -1,10 +1,10 @@
 'use server';
 
-import { fetchAPI } from '@/apis/fetch-api';
-import { ApiResult } from '@/apis/types/api-result';
-import { QuestionsResponse } from '@/apis/types/response/questions';
-import { APIEndpoints } from '@/constants/api-end-points';
-import { QuestionsPresentation } from '@/apis/presentation/questions';
+import { APIEndpoints } from '@/config/apis/api-end-points';
+import { ApiResult } from '../../types/api-result';
+import { QuestionsPresentation } from '../../presentation/questions';
+import { QuestionsResponse } from '../../types/response/questions';
+import { fetchAPI } from '../../fetch-api';
 
 const { url } = APIEndpoints.question.list;
 

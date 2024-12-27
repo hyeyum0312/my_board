@@ -1,7 +1,7 @@
 import { HttpResponse } from 'msw';
-import { APIEndpoints } from '@/constants/api-end-points';
+import { APIEndpoints } from '@/config/apis/api-end-points';
 import { makeHandler } from '../utils';
-import { mockQuestions } from '@/mocks/data/mock-question';
+import { mockQuestions } from '@/lib/mocks/data/mock-question';
 
 // GET 요청 핸들러
 const { url, method } = APIEndpoints.question.list;

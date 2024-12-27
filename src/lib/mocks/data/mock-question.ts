@@ -1,4 +1,4 @@
-import { QuestionResponse } from '@/apis/types/response/questions';
+import { QuestionResponse } from '@/config/apis/types/response/questions';
 import { faker } from '@faker-js/faker';
 
 const generateData = (): QuestionResponse => {
