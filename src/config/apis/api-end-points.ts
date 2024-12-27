@@ -1,6 +1,6 @@
 import { ServerEnv } from '@/config/env/server-env';
 
-const baseUrl = ServerEnv.backendUrl;
+const baseUrl = ServerEnv.backendUrl; // process.env.BACKEND_URL이 올바르게 설정되었는지 확인
 
 export interface APIEndpoints {
   question: {
@@ -55,7 +55,7 @@ export const APIEndpoints: APIEndpoints = {
   board: {
     list: {
       method: 'get',
-      url: `${baseUrl}/board`,
+      url: process.env.MOCKING === 'true' ? '/board' : `${baseUrl}/board`,
     },
     create: {
       method: 'post',
@@ -70,4 +70,4 @@ export const APIEndpoints: APIEndpoints = {
       url: `${baseUrl}/board/:id`,
     },
   },
-} as const;
+};
