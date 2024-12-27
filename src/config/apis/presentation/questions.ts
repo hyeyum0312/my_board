@@ -1,7 +1,7 @@
 import {
   QuestionResponse,
   QuestionsResponse,
-} from '@/apis/types/response/questions';
+} from '../types/response/questions';
 
 export class QuestionPresentation implements QuestionResponse {
   question: string;

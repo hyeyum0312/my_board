@@ -1,7 +1,8 @@
-import { getQuestions } from '@/config/apis/fetchers/questions/get-questions';
+import { getBoard } from '@/config/apis/fetchers/get-board';
 
 export default async function Home() {
-  const { data } = await getQuestions();
+  const { data } = await getBoard();
+  console.log('data>>>,', data);
 
   return (
     <div>
