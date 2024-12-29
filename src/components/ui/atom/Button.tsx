@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import Link from 'next/link';
 
 const button = cva(
-  'px-4 py-2 rounded-md focus:outline-none', // 기본 스타일
+  'px-4 py-2 rounded-md focus:outline-none transition-all duration-200', // 기본 스타일
   {
     variants: {
       color: {
@@ -50,9 +50,9 @@ export default function Button({
   if (href) {
     return (
       <Link href={href}>
-        <button className={classes} onClick={onClick} disabled={disabled}>
+        <a className={classes} onClick={disabled ? undefined : onClick}>
           {children}
-        </button>
+        </a>
       </Link>
     );
   }
