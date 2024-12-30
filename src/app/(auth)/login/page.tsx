@@ -1,11 +1,11 @@
 'use client';
 
-import LoginForm from '@/components/ui/organisms/auth/Login.Form';
+import { LoginDialog } from '@/components/ui/organisms/auth/Login.Form';
 
 export default function LoginPage() {
   return (
-    <div>
-      <LoginForm />
+    <div className="flex items-center justify-center min-h-screen">
+      <LoginDialog />
     </div>
   );
 }

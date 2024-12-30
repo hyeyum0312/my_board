@@ -1,0 +1,76 @@
+.login-dialog {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #fff;
+
+  &__title {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 14px;
+  }
+
+  &__input {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    &--username {
+      /* 특정 스타일 필요 시 */
+    }
+
+    &--password {
+      /* 특정 스타일 필요 시 */
+    }
+  }
+
+  &__error {
+    margin-bottom: 1rem;
+    color: #e63946;
+    font-size: 0.875rem;
+  }
+
+  &__button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &--submit {
+      margin-top: 1rem;
+    }
+  }
+
+  &__auth {
+    display: flex;
+    justify-content: center;
+    column-gap: 4px;
+  }
+}
