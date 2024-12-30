@@ -13,39 +13,38 @@ export const LoginDialog: React.FC = () => {
   return (
     <div className="login-dialog">
       <h2 className="login-dialog__title">Login</h2>
-      <div>
-        <form className="login-dialog__form" onSubmit={handleSubmit}>
-          {error && <div className="login-dialog__error">{error}</div>}
-          <Input
-            size="medium"
-            type="text"
-            state="default"
-            placeholder="아이디를 입력하세요"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+      <div></div>
+      <form className="login-dialog__form" onSubmit={handleSubmit}>
+        {error && <div className="login-dialog__error">{error}</div>}
+        <Input
+          size="medium"
+          type="text"
+          state="default"
+          placeholder="아이디를 입력하세요"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-          <Input
-            size="medium"
-            type="password"
-            state="default"
-            placeholder="패스워드를 입력하세요"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <Input
+          size="medium"
+          type="password"
+          state="default"
+          placeholder="패스워드를 입력하세요"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <Button color="primary" size="medium" type="submit">
-            Login
-          </Button>
-        </form>
-        <div className="login-dialog__auth">
-          <Button color="link" href="/password">
-            비밀번호 재설정
-          </Button>
-          <Button color="link" href="/signup">
-            회원가입
-          </Button>
-        </div>
+        <Button color="primary" size="medium" type="submit">
+          Login
+        </Button>
+      </form>
+      <div className="login-dialog__auth">
+        <Button color="link" href="/password">
+          비밀번호 재설정
+        </Button>
+        <Button color="link" href="/signup">
+          회원가입
+        </Button>
       </div>
     </div>
   );

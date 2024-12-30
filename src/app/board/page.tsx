@@ -1,10 +1,7 @@
 'use client';
 
 import BoardTable from '@/components/ui/organisms/table/Table';
-import {
-  boardTableColumn,
-  boardTableRow,
-} from '@/config/apis/types/response/board';
+import { boardTableColumn, boardTableRow } from '@/lib/mocks/board/type';
 import React, { useState } from 'react';
 
 // dummyData에 대한 타입 명시
