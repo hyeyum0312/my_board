@@ -65,3 +65,5 @@ module.exports = {
   },
   //   plugins: [require('tailwindcss-animate')],
 };
+
+// 모바일, 데스크탑
