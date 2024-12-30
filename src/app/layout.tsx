@@ -8,10 +8,8 @@ type Props = {
 };
 
 // MSW 초기화
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-  import('../lib/mocks/init').catch((err) => {
-    console.error('Failed to initialize MSW:', err);
-  });
+if (process.env.NODE_ENV === 'development') {
+  import('../lib/mocks/init');
 }
 
 export default function RootLayout({ children, params }: Props) {
