@@ -1,7 +1,7 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { fetchUsers } from '@/lib/api/users';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Hy() {
   const { data, isLoading, isError, error } = useQuery({
