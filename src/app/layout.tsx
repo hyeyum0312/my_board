@@ -7,6 +7,13 @@ type Props = {
   params: { locale: string };
 };
 
+// MSW 초기화
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  import('../lib/mocks/init').catch((err) => {
+    console.error('Failed to initialize MSW:', err);
+  });
+}
+
 export default function RootLayout({ children, params }: Props) {
   return (
     <html suppressHydrationWarning lang="en">

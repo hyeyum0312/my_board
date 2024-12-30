@@ -1,23 +1,21 @@
+// src/app/(auth)/_hooks/useLoginHook.ts
 import { useState } from 'react';
-import { UseLoginFormReturn } from '../_types/login';
 
 export function useLoginForm(
   onSubmit: (username: string, password: string) => void,
-): UseLoginFormReturn {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null); // 기존 에러 초기화
     if (!username || !password) {
-      setError('Username and password are required.');
+      setError('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
-
-    setError('');
-    onSubmit(username, password); // 상위 컴포넌트 또는 API 호출 로직 실행
+    onSubmit(username, password);
   };
 
   return {
@@ -26,6 +24,7 @@ export function useLoginForm(
     password,
     setPassword,
     error,
+    setError,
     handleSubmit,
   };
 }
