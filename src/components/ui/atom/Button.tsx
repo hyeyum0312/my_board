@@ -6,9 +6,11 @@ const button = cva(
   {
     variants: {
       color: {
-        primary: 'bg-blue-500 text-white hover:bg-blue-600',
+        primary: 'bg-black text-white hover:bg-gray-800',
         secondary: 'bg-gray-500 text-white hover:bg-gray-600',
         danger: 'bg-red-500 text-white hover:bg-red-600',
+        outline: 'border border-gray-500 text-gray-500 hover:bg-gray-100', // 보더만 있는 버튼
+        link: 'text-blue-500 underline hover:text-blue-700', // Link용 스타일
       },
       size: {
         small: 'text-sm',
@@ -28,37 +30,58 @@ const button = cva(
   },
 );
 
-type ButtonProps = {
-  color?: 'primary' | 'secondary' | 'danger';
+// Button Props 타입 정의
+type ButtonBaseProps = {
+  color?: 'primary' | 'secondary' | 'danger' | 'outline' | 'link';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
   children: React.ReactNode;
-  onClick?: () => void;
-  href?: string;
 };
+
+type SubmitButtonProps = ButtonBaseProps & {
+  type?: 'submit';
+  onClick?: never; // 폼 제출 버튼에 onClick 불필요
+  href?: never;
+};
+
+type ActionButtonProps = ButtonBaseProps & {
+  type?: 'button';
+  onClick?: () => void;
+  href?: never;
+};
+
+type LinkButtonProps = ButtonBaseProps & {
+  href: string;
+  type?: never;
+  onClick?: never;
+};
+
+type ButtonProps = SubmitButtonProps | ActionButtonProps | LinkButtonProps;
 
 export default function Button({
   color = 'primary',
   size = 'medium',
   disabled = false,
   children,
+  type = 'button', // 기본 버튼 타입을 "button"으로 설정
   onClick,
   href,
 }: ButtonProps) {
   const classes = button({ color, size, disabled });
 
+  // Link 버튼
   if (href) {
-    return (
-      <Link href={href}>
-        <a className={classes} onClick={disabled ? undefined : onClick}>
-          {children}
-        </a>
-      </Link>
-    );
+    return <Link href={href}>{children}</Link>;
   }
 
+  // 일반 버튼 (submit 또는 button 타입)
   return (
-    <button className={classes} onClick={onClick} disabled={disabled}>
+    <button
+      type={type}
+      className={classes}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );
