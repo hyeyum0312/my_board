@@ -1,4 +1,4 @@
-import DefaultLayout from './layout/DefaultLayout';
+import DefaultLayout from '../components/layout/DefaultLayout';
 import { ReactNode } from 'react';
 import '../styles/globals.scss';
 
