@@ -7,11 +7,6 @@ type Props = {
   params: { locale: string };
 };
 
-// MSW 초기화
-if (process.env.NODE_ENV === 'development') {
-  import('../lib/mocks/init');
-}
-
 export default function RootLayout({ children, params }: Props) {
   return (
     <html suppressHydrationWarning lang="en">

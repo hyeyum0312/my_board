@@ -1,23 +1,12 @@
+import { BoardTableRow, BoardTableColumn } from '@/lib/mocks/board/type';
 import React from 'react';
 
-type Row = {
-  id: number;
-  title: string;
-  author: string;
-  date: string;
-};
-
-type Column = {
-  key: keyof Row;
-  label: string;
-};
-
 type BoardTableProps = {
-  columns: Column[];
-  rows: Row[];
-  sortKey: keyof Row;
+  columns: BoardTableColumn[];
+  rows: BoardTableRow[];
+  sortKey: keyof BoardTableRow; // 수정
   sortOrder: 'asc' | 'desc';
-  onSortChange: (key: keyof Row, sortOrder: 'asc' | 'desc') => void;
+  onSortChange: (key: keyof BoardTableRow, sortOrder: 'asc' | 'desc') => void; // 수정
   onRowClick: (id: number) => void;
 };
 
@@ -29,7 +18,7 @@ export default function BoardTable({
   onSortChange,
   onRowClick,
 }: BoardTableProps) {
-  const handleSort = (key: keyof Row) => {
+  const handleSort = (key: keyof BoardTableRow) => {
     const newSortOrder =
       sortKey === key && sortOrder === 'asc' ? 'desc' : 'asc';
     onSortChange(key, newSortOrder);

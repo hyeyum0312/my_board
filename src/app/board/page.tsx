@@ -1,41 +1,41 @@
 'use client';
 
 import BoardTable from '@/components/ui/organisms/table/Table';
-import { boardTableColumn, boardTableRow } from '@/lib/mocks/board/type';
+import { fetchBoards } from '@/lib/api/board';
+import { boardColumns } from '@/lib/mocks/board/data';
+import { Board } from '@/lib/mocks/board/type';
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
-// dummyData에 대한 타입 명시
-const dummyData: boardTableRow[] = [
-  { id: 1, title: '게시물 1', author: '홍길동', date: '2024-12-25' },
-  { id: 2, title: '게시물 2', author: '김철수', date: '2024-12-24' },
-  { id: 3, title: '게시물 3', author: '박영희', date: '2024-12-23' },
-];
-
-const columns: boardTableColumn[] = [
-  { key: 'id', label: 'ID' }, // 'id'는 Row의 키 중 하나입니다.
-  { key: 'title', label: '제목' }, // 'title'도 마찬가지입니다.
-  { key: 'author', label: '작성자' },
-  { key: 'date', label: '작성일' },
-];
-
 export default function BoardPage() {
-  const [data, setData] = useState(dummyData);
-  const [sortKey, setSortKey] = useState<keyof (typeof dummyData)[0]>('id');
+  const {
+    data: boards = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Board[]>({
+    queryKey: ['boards'],
+    queryFn: fetchBoards,
+  });
+
+  const [sortKey, setSortKey] = useState<keyof Board>('id');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const handleSortChange = (
-    key: keyof (typeof dummyData)[0],
-    order: 'asc' | 'desc',
-  ) => {
+  const sortedData = React.useMemo(() => {
+    if (!boards) return [];
+    return [...boards].sort((a, b) => {
+      const aValue = a[sortKey];
+      const bValue = b[sortKey];
+
+      if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [boards, sortKey, sortOrder]);
+
+  const handleSortChange = (key: keyof Board, order: 'asc' | 'desc') => {
     setSortKey(key);
     setSortOrder(order);
-    setData(
-      [...data].sort((a, b) => {
-        if (a[key] < b[key]) return order === 'asc' ? -1 : 1;
-        if (a[key] > b[key]) return order === 'asc' ? 1 : -1;
-        return 0;
-      }),
-    );
   };
 
   const handleRowClick = (id: number) => {
@@ -43,11 +43,23 @@ export default function BoardPage() {
     // 추가 동작 구현 가능 (예: 상세 페이지로 이동)
   };
 
+  if (isLoading) {
+    return <div className="text-center">Loading...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500">
+        Error: {error instanceof Error ? error.message : 'Unknown error'}
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto py-6">
       <BoardTable
-        columns={columns}
-        rows={data}
+        columns={boardColumns}
+        rows={sortedData}
         sortKey={sortKey}
         sortOrder={sortOrder}
         onSortChange={handleSortChange}
