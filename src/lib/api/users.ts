@@ -1,9 +1,9 @@
-import { User } from './types';
+import { User } from '../mocks/user/types';
 
-export async function fetchUsers(): Promise<User[]> {
+export const fetchUsers = async (): Promise<User[]> => {
   const response = await fetch('/api/users');
   if (!response.ok) {
     throw new Error('Failed to fetch users');
   }
   return response.json();
-}
+};

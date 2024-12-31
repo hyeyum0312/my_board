@@ -11,3 +11,9 @@ export type boardTableColumn = {
   key: keyof boardTableRow; // Row의 키 중 하나만 가능
   label: string; // 컬럼의 표시 이름
 };
+
+export type Board = {
+  id: number;
+  title: string;
+  description: string;
+};
