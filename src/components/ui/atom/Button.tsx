@@ -71,7 +71,13 @@ export default function Button({
 
   // Link 버튼
   if (href) {
-    return <Link href={href}>{children}</Link>;
+    return (
+      <Link href={href}>
+        <button type="button" className={classes}>
+          {children}
+        </button>
+      </Link>
+    );
   }
 
   // 일반 버튼 (submit 또는 button 타입)

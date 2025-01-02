@@ -1,5 +1,5 @@
-import { http } from 'msw';
-import { boardTableRow } from '@/lib/mocks/board/type';
+import { http, HttpResponse } from 'msw';
+import { BoardTableRow } from '@/lib/mocks/board/type';
 import { boards } from './data';
 
 // 기본값 정의
@@ -7,28 +7,32 @@ const DEFAULT_TITLE = 'Untitled';
 const DEFAULT_AUTHOR = 'Anonymous';
 const getDefaultDate = () => new Date().toISOString(); // ISO 형식 날짜
 
-export const postBoardHandlers = [
-  http.post('/api/board', async (req, res, ctx) => {
+// 에러 메시지 상수
+const ERROR_MESSAGES = {
+  INVALID_DATA: 'Invalid data: title and author are required.',
+  SERVER_ERROR: 'Internal server error.',
+};
+
+export const handlers = [
+  http.post('/api/board', async ({ request }) => {
     try {
       // 요청 데이터 파싱
-      const newBoard: Partial<boardTableRow> = await req.json();
+      const newBoard: Partial<BoardTableRow> = await request.json();
 
       // 필수 필드 검증
       if (!newBoard.title || !newBoard.author) {
-        return res(
-          ctx.status(400),
-          ctx.json({
-            message: 'Invalid data: title and author are required.',
-          }),
+        return HttpResponse.json(
+          { message: ERROR_MESSAGES.INVALID_DATA },
+          { status: 400 },
         );
       }
 
-      // 새 게시글 ID 생성
+      // 새로운 ID 생성
       const newId =
         boards.length > 0 ? Math.max(...boards.map((b) => b.id)) + 1 : 1;
 
       // 새 게시글 생성
-      const createdBoard: boardTableRow = {
+      const createdBoard: BoardTableRow = {
         id: newId,
         title: newBoard.title || DEFAULT_TITLE,
         author: newBoard.author || DEFAULT_AUTHOR,
@@ -39,21 +43,19 @@ export const postBoardHandlers = [
       boards.push(createdBoard);
 
       // 성공 응답 반환
-      return res(
-        ctx.status(201), // 201 Created
-        ctx.json({
+      return HttpResponse.json(
+        {
           message: 'Board created successfully',
           board: createdBoard,
-        }),
+        },
+        { status: 201 },
       );
     } catch (error) {
       // 서버 오류 처리
-      console.error('Error processing request:', error);
-      return res(
-        ctx.status(500),
-        ctx.json({
-          message: 'Internal server error.',
-        }),
+      console.error('Error processing POST /api/board:', error);
+      return HttpResponse.json(
+        { message: ERROR_MESSAGES.SERVER_ERROR },
+        { status: 500 },
       );
     }
   }),

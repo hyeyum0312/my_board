@@ -8,10 +8,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import '@/lib/mocks/init'; // MSW 초기화 (init.ts에서 한 번만 실행)
 
 export default function DefaultLayout({ children }: PropsWithChildren) {
-  const queryClientRef = useRef(new QueryClient());
-
+  const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClientRef.current}>
+    <QueryClientProvider client={queryClient}>
       <div className="default-layout">
         <Header />
         <main role="main">{children}</main>
