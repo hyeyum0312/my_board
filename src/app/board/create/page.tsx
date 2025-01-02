@@ -11,7 +11,7 @@ import { Board } from '@/lib/mocks/board/types';
 import { BoardForm } from '@/components/ui/organisms/boardForm';
 
 export default function BoardDetailPage() {
-  const { id } = useParams(); // URL의 id 가져오기
+  const { id } = useParams();
   const boardId = Number(id);
   const router = useRouter();
 

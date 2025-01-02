@@ -11,3 +11,21 @@ export const assertValue = <T>(value: T, message: string) => {
   }
   return value;
 };
+
+type SortedDataProps = {
+  data: any[];
+  sortKey: string;
+  sortOrder: 'asc' | 'desc';
+};
+
+export const sortedData = ({ data, sortKey, sortOrder }: SortedDataProps) => {
+  if (!data || data.length === 0) return [];
+  return [...data].sort((a, b) => {
+    const aValue = a[sortKey];
+    const bValue = b[sortKey];
+
+    if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+    return 0;
+  });
+};

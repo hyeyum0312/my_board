@@ -1,14 +1,13 @@
 'use client';
 
 import BoardTable from '@/components/ui/organisms/table/Table';
-import { fetchBoards } from '@/lib/api/board';
 import { boardColumns } from '@/lib/mocks/board/data';
-import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // App Router에서 사용
+import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/atom/Button';
 import { useBoards } from '@/lib/api/hooks/useBoard';
 import { Board } from '@/lib/mocks/board/types';
+import { sortedData } from '@/lib/utils';
 
 export default function BoardPage() {
   const router = useRouter();
@@ -19,16 +18,8 @@ export default function BoardPage() {
   const [sortKey, setSortKey] = useState<keyof Board>('id');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const sortedData = React.useMemo(() => {
-    if (!boards) return [];
-    return [...boards].sort((a, b) => {
-      const aValue = a[sortKey];
-      const bValue = b[sortKey];
-
-      if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
-      if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
+  const handleSortedData = React.useMemo(() => {
+    return sortedData({ data: boards, sortKey, sortOrder });
   }, [boards, sortKey, sortOrder]);
 
   const handleSortChange = (key: keyof Board, order: 'asc' | 'desc') => {
@@ -38,7 +29,6 @@ export default function BoardPage() {
 
   const handleRowClick = (id: number) => {
     console.log(`Row clicked: ${id}`);
-    // 추가 동작 구현 가능 (예: 상세 페이지로 이동)
     router.push(`/board/${id}`); // URL로 이동
   };
 
@@ -62,7 +52,7 @@ export default function BoardPage() {
     <div className="container mx-auto py-6">
       <BoardTable
         columns={boardColumns}
-        rows={sortedData}
+        rows={handleSortedData}
         sortKey={sortKey}
         sortOrder={sortOrder}
         onSortChange={handleSortChange}
