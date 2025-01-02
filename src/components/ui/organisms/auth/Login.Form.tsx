@@ -1,51 +1,67 @@
-import React from 'react';
-import './LoginDialog.scss';
+'use client';
+
+import React, { useState } from 'react';
 import Input from '../../atom/Input';
 import Button from '../../atom/Button';
-import { useLoginForm } from '@/app/(auth)/_hooks/useLoginHook';
 
-export const LoginDialog: React.FC = () => {
-  const { username, setUsername, password, setPassword, error, handleSubmit } =
-    useLoginForm((username: string, password: string) => {
-      console.log('Form submitted:', { username, password });
-    });
+const LoginForm = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('폼 제출 데이터:', formData);
+  };
 
   return (
-    <div className="login-dialog">
-      <h2 className="login-dialog__title">Login</h2>
-      <div></div>
-      <form className="login-dialog__form" onSubmit={handleSubmit}>
-        {error && <div className="login-dialog__error">{error}</div>}
-        <Input
-          size="medium"
-          type="text"
-          state="default"
-          placeholder="아이디를 입력하세요"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    <div className="flex items-center justify-center">
+      <form onSubmit={onSubmit} className="w-full">
+        <div className="mb-4">
+          <label
+            htmlFor="username"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            아이디
+          </label>
+          <Input
+            type="text"
+            id="username"
+            placeholder="아이디를 입력하세요"
+            onChange={handleChange}
+          />
+        </div>
 
-        <Input
-          size="medium"
-          type="password"
-          state="default"
-          placeholder="패스워드를 입력하세요"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="mb-6">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            비밀번호
+          </label>
+          <Input
+            type="password"
+            id="password"
+            placeholder="비밀번호를 입력하세요"
+            onChange={handleChange}
+          />
+        </div>
 
-        <Button color="primary" size="medium" type="submit">
-          Login
-        </Button>
+        <div className="flex items-center justify-between">
+          <Button type="submit">로그인</Button>
+        </div>
       </form>
-      <div className="login-dialog__auth">
-        <Button color="link" href="/password">
-          비밀번호 재설정
-        </Button>
-        <Button color="link" href="/signup">
-          회원가입
-        </Button>
-      </div>
     </div>
   );
 };
+
+export default LoginForm;

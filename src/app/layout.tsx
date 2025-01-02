@@ -7,7 +7,7 @@ type Props = {
   params: { locale: string };
 };
 
-export default function RootLayout({ children, params }: Props) {
+export default function RootLayout({ children }: Props) {
   return (
     <html suppressHydrationWarning lang="en">
       <body>

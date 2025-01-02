@@ -3,8 +3,6 @@
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useBoardId, useUpdateBoard } from '@/lib/api/hooks/useBoard';
-import Input from '@/components/ui/atom/Input';
-import Button from '@/components/ui/atom/Button';
 import { Board } from '@/lib/mocks/board/types';
 import { BoardForm } from '@/components/ui/organisms/boardForm';
 

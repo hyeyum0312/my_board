@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import React from 'react';
 
 const inputStyles = cva(
-  'px-4 py-2 rounded-md border focus:outline-none focus:ring-2 transition-all duration-200', // 기본 스타일
+  'w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 transition-all duration-200', // 기본 스타일
   {
     variants: {
       size: {
@@ -29,6 +29,7 @@ const inputStyles = cva(
 );
 
 type InputProps = {
+  id?: string;
   size?: 'small' | 'medium' | 'large';
   state?: 'default' | 'error' | 'success';
   disabled?: boolean;
@@ -39,6 +40,7 @@ type InputProps = {
 };
 
 export default function Input({
+  id,
   size = 'medium',
   state = 'default',
   disabled = false,
@@ -57,6 +59,7 @@ export default function Input({
       className={classes}
       placeholder={placeholder}
       disabled={disabled}
+      id={id}
     />
   );
 }

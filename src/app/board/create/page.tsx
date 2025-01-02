@@ -2,11 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import {
-  useBoardId,
-  useCreateBoard,
-  useUpdateBoard,
-} from '@/lib/api/hooks/useBoard';
+import { useBoardId, useCreateBoard } from '@/lib/api/hooks/useBoard';
 import { Board } from '@/lib/mocks/board/types';
 import { BoardForm } from '@/components/ui/organisms/boardForm';
 

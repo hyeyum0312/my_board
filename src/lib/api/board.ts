@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-import { useMutation } from '@tanstack/react-query';
 import { Board } from '../mocks/board/types';
 
 export const fetchBoards = async (): Promise<Board[]> => {
