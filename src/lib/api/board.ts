@@ -1,4 +1,6 @@
-import { Board } from '../mocks/board/type';
+import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { Board } from '../mocks/board/types';
 
 export const fetchBoards = async (): Promise<Board[]> => {
   const response = await fetch('/api/boards', {
@@ -11,6 +13,7 @@ export const fetchBoards = async (): Promise<Board[]> => {
 
   return response.json();
 };
+
 export const fetchBoardById = async (id: number): Promise<Board> => {
   try {
     const response = await fetch(`/api/boards/${id}`, {
@@ -36,9 +39,9 @@ export const fetchBoardById = async (id: number): Promise<Board> => {
 };
 
 export const createBoard = async (
-  newBoard: Omit<Board, 'id'>, // ID를 제외한 데이터를 받음
+  newBoard: Omit<Board, 'id'>,
 ): Promise<Board> => {
-  const response = await fetch('/api/boards', {
+  const response = await fetch('/api/board', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -46,10 +49,31 @@ export const createBoard = async (
     body: JSON.stringify(newBoard),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json();
+  const contentType = response.headers.get('Content-Type');
+  if (!response.ok || !contentType?.includes('application/json')) {
+    const errorData = contentType?.includes('application/json')
+      ? await response.json()
+      : { message: 'Unexpected response from server' };
+
     throw new Error(errorData.message || 'Failed to create board');
   }
 
   return response.json();
+};
+
+export const updateBoard = async (
+  boardId: number,
+  updatedBoard: Partial<Board>,
+): Promise<void> => {
+  const response = await fetch(`/api/board/${boardId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedBoard),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update board.');
+  }
 };

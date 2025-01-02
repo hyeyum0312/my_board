@@ -35,7 +35,7 @@ type InputProps = {
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: 'text' | 'email' | 'password' | 'number';
+  type?: 'text' | 'email' | 'password' | 'number' | 'date';
 };
 
 export default function Input({

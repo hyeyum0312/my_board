@@ -1,4 +1,4 @@
-import { BoardTableColumn, BoardTableRow } from '@/lib/mocks/board/type';
+import { BoardTableColumn, BoardTableRow } from './types';
 
 export const boards: BoardTableRow[] = [
   { id: 1, title: '게시물 1', author: '홍길동', date: '2024-12-25' },

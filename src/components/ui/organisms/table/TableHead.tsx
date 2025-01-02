@@ -5,7 +5,7 @@ type TableHeadProps = {
   onSort: (key: 'title' | 'author' | 'date') => void;
 };
 
-const TableHead: React.FC<TableHeadProps> = ({ onSort }) => {
+const TableHead = ({ onSort }: TableHeadProps) => {
   return (
     <thead>
       <tr>

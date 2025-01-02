@@ -1,4 +1,4 @@
-import { BoardTableRow, BoardTableColumn } from '@/lib/mocks/board/type';
+import { BoardTableColumn, BoardTableRow } from '@/lib/mocks/board/types';
 import React from 'react';
 
 type BoardTableProps = {

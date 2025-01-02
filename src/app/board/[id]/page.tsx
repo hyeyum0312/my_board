@@ -1,18 +1,12 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useQuery, useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { fetchBoardById } from '@/lib/api/board';
+import { useBoardId, useUpdateBoard } from '@/lib/api/hooks/useBoard';
 import Input from '@/components/ui/atom/Input';
 import Button from '@/components/ui/atom/Button';
-
-interface Board {
-  id: number;
-  title: string;
-  author: string;
-  date: string;
-}
+import { Board } from '@/lib/mocks/board/types';
+import { BoardForm } from '@/components/ui/organisms/boardForm';
 
 export default function BoardDetailPage() {
   const { id } = useParams(); // URL의 id 가져오기
@@ -25,39 +19,11 @@ export default function BoardDetailPage() {
     date: '',
   });
 
-  const {
-    data: board,
-    isLoading,
-    isError,
-    error,
-  } = useQuery<Board>({
-    queryKey: ['board', boardId],
-    queryFn: () => fetchBoardById(boardId),
-    enabled: !isNaN(boardId), // boardId가 유효한 숫자일 때만 요청 실행
-  });
+  // 게시글 상세 데이터 조회 훅
+  const { data, isLoading, isError, error } = useBoardId(boardId);
 
-  const updateBoardMutation = useMutation({
-    mutationFn: async (updatedBoard: Partial<Board>) => {
-      const response = await fetch(`/api/board/${boardId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedBoard),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update board.');
-      }
-    },
-    onSuccess: () => {
-      alert('Board updated successfully!');
-      router.push('/board');
-    },
-    onError: (error: any) => {
-      alert(error.message || 'Failed to update board.');
-    },
-  });
+  // 게시글 업데이트 훅
+  const { mutate: updateBoard } = useUpdateBoard();
 
   const handleInputChange = (field: keyof Board, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -69,19 +35,30 @@ export default function BoardDetailPage() {
       return;
     }
 
-    updateBoardMutation.mutate(formData);
+    updateBoard(
+      { id: boardId, updatedData: formData },
+      {
+        onSuccess: () => {
+          alert('Board updated successfully!');
+          router.push('/board');
+        },
+        onError: (error: any) => {
+          alert(error.message || 'Failed to update board.');
+        },
+      },
+    );
   };
 
-  // board 데이터가 변경될 때 상태 업데이트
+  // 게시글 데이터 로드 시 상태 업데이트
   useEffect(() => {
-    if (board) {
+    if (data) {
       setFormData({
-        title: board.title,
-        author: board.author,
-        date: board.date,
+        title: data.title,
+        author: data.author,
+        date: data.date,
       });
     }
-  }, [board]);
+  }, [data]);
 
   if (isLoading) {
     return <div className="text-center">Loading board details...</div>;
@@ -98,38 +75,12 @@ export default function BoardDetailPage() {
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-2xl font-bold mb-4">Board Details</h1>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Title:</label>
-        <Input
-          type="text"
-          value={formData.title || ''}
-          onChange={(e) => handleInputChange('title', e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Author:</label>
-        <Input
-          type="text"
-          value={formData.author || ''}
-          onChange={(e) => handleInputChange('author', e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Date:</label>
-        <Input
-          type="date"
-          value={formData.date || ''}
-          onChange={(e) => handleInputChange('date', e.target.value)}
-        />
-      </div>
-      <div className="flex gap-4">
-        <Button href="/board" color="outline">
-          목록
-        </Button>
-        <Button type="button" onClick={handleUpdateBoard}>
-          수정
-        </Button>
-      </div>
+      <BoardForm
+        formData={formData}
+        onChange={handleInputChange}
+        onSubmit={handleUpdateBoard}
+        isSubmitting={true}
+      />
     </div>
   );
 }

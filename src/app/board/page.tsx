@@ -3,24 +3,18 @@
 import BoardTable from '@/components/ui/organisms/table/Table';
 import { fetchBoards } from '@/lib/api/board';
 import { boardColumns } from '@/lib/mocks/board/data';
-import { Board } from '@/lib/mocks/board/type';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // App Router에서 사용
 import Button from '@/components/ui/atom/Button';
+import { useBoards } from '@/lib/api/hooks/useBoard';
+import { Board } from '@/lib/mocks/board/types';
 
 export default function BoardPage() {
   const router = useRouter();
 
-  const {
-    data: boards = [],
-    isLoading,
-    isError,
-    error,
-  } = useQuery<Board[]>({
-    queryKey: ['boards'],
-    queryFn: fetchBoards,
-  });
+  // 게시판 데이터 로드
+  const { data: boards = [], isLoading, isError, error } = useBoards();
 
   const [sortKey, setSortKey] = useState<keyof Board>('id');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');

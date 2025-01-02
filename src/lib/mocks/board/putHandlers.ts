@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { Board } from './type';
 import { boards } from './data';
+import { Board } from './types';
 
 export const putBoardHandlers = [
   http.put('/api/board/:id', async ({ request, params }) => {

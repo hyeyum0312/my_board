@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { BoardTableRow } from '@/lib/mocks/board/type';
 import { boards } from './data';
+import { BoardTableRow } from './types';
 
 // 기본값 정의
 const DEFAULT_TITLE = 'Untitled';
@@ -13,7 +13,7 @@ const ERROR_MESSAGES = {
   SERVER_ERROR: 'Internal server error.',
 };
 
-export const handlers = [
+export const postHandlers = [
   http.post('/api/board', async ({ request }) => {
     try {
       // 요청 데이터 파싱
@@ -27,7 +27,7 @@ export const handlers = [
         );
       }
 
-      // 새로운 ID 생성
+      // Auto Increment 방식으로 ID 생성
       const newId =
         boards.length > 0 ? Math.max(...boards.map((b) => b.id)) + 1 : 1;
 

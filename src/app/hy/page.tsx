@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchBoards } from '@/lib/api/board';
 import { fetchUsers } from '@/lib/api/users';
 import { User } from '@/lib/mocks/user/types';
-import { Board } from '@/lib/mocks/board/type';
+import { Board } from '@/lib/mocks/board/types';
 
 function DataLoader({ isLoading, isError, error, children }: any) {
   if (isLoading) return <div>Loading...</div>;
