@@ -1,16 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Input from '../../atom/Input';
 import Button from '../../atom/Button';
 
 const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter(); // Next.js의 useRouter 훅
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -22,21 +21,13 @@ const LoginForm = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!formData.email || !formData.password) {
-      setError('모든 필드를 입력해주세요.');
-      return;
-    }
-    if (formData.password.length < 6) {
-      setError('비밀번호는 최소 6글자 이상이어야 합니다.');
-      return;
-    }
+    setError(null); // 에러 초기화
 
     try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // 쿠키를 포함
+        credentials: 'include', // 쿠키 포함
         body: JSON.stringify(formData),
       });
 
@@ -48,6 +39,8 @@ const LoginForm = () => {
       }
 
       setSuccess(result.message);
+      // 로그인 성공 시 홈 화면으로 이동
+      router.push('/');
     } catch (error) {
       setError('An unexpected error occurred.');
     }
@@ -63,12 +56,12 @@ const LoginForm = () => {
             htmlFor="email"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            아이디
+            이메일
           </label>
           <Input
             type="text"
             id="email"
-            placeholder="아이디를 입력하세요"
+            placeholder="이메일을 입력하세요"
             onChange={handleChange}
           />
         </div>

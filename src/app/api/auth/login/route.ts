@@ -8,8 +8,6 @@ const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  console.log('req', req);
-
   try {
     const { email, password } = await req.json();
 
@@ -46,7 +44,7 @@ export async function POST(req: Request) {
     // });
     response.headers.set(
       'Set-Cookie',
-      `token=${token}; HttpOnly; Path=/; Max-Age=3600; Secure: false; SameSite=Lax`,
+      `token=${token}; HttpOnly; Path=/; Max-Age=3600; Secure=false; SameSite=Lax`,
     );
 
     return response;
