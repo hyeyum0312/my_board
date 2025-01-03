@@ -21,6 +21,10 @@ const LoginForm = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('폼 제출 데이터:', formData);
+
+    if (!formData.username || !formData.password) {
+      console.log('error: Email and password are required');
+    }
   };
 
   return (
