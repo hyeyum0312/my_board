@@ -1,4 +1,4 @@
-import { LoginResponse } from '../mocks/login/type';
+import { LoginResponse } from '@/app/(auth)/login/type';
 
 export async function loginUser(data: {
   username: string;
