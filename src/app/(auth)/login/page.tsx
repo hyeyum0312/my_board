@@ -1,4 +1,4 @@
-import LoginForm from '@/components/ui/organisms/auth/Login.Form';
+import LoginForm from '@/components/ui/organisms/auth/LoginForm';
 
 export default function LoginPage() {
   return (

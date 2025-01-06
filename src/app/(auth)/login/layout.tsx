@@ -7,7 +7,7 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-  const token = cookieStore.get('token');
+  const token = cookieStore.get('refresh_token');
 
   if (token) {
     redirect('/'); // 토큰이 있으면 대시보드로 리다이렉트

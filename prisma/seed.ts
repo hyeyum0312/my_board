@@ -28,3 +28,4 @@ async function main() {
 main();
 
 // npx tsx prisma/seed.ts
+// npx prisma studio
