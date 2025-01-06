@@ -8,41 +8,29 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../../../../../stores/authStore';
 
 const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null); // 에러 메시지 관리
+
+  const { setLoggedIn, setAccessToken } = useAuthStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+    setFormData((prevData) => ({ ...prevData, [id]: value }));
+    setError(null); // 에러 상태 초기화
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const { ok, data, error } = await loginUser(formData);
+    const { ok, data, error } = await loginUser(formData);
 
-      if (ok && data) {
-        useAuthStore.getState().setLoggedIn(true);
-        router.push('/');
-      } else {
-        setError(error || '로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
-        console.log('error', error);
-        useAuthStore.getState().setLoggedIn(false); // 로그아웃 처리
-      }
-    } catch (error) {
-      setError(
-        error instanceof Error
-          ? error.message
-          : 'An unexpected error occurred during login.',
-      );
-      useAuthStore.getState().setLoggedIn(false); // 로그아웃 처리
+    if (ok && data) {
+      setLoggedIn(true);
+      setAccessToken(data.access_token);
+      router.push('/');
+    } else {
+      setError(error || '로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
+      setLoggedIn(false);
     }
   };
 
@@ -63,7 +51,6 @@ const LoginForm = () => {
             onChange={handleChange}
           />
         </div>
-
         <div className="mb-6">
           <label
             htmlFor="password"
@@ -78,7 +65,7 @@ const LoginForm = () => {
             onChange={handleChange}
           />
         </div>
-
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <div className="flex items-center justify-between">
           <Button type="submit">로그인</Button>
         </div>

@@ -5,5 +5,5 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   email: string;
-  token: string;
+  access_token: string;
 }

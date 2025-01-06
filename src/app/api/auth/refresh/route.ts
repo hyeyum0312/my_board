@@ -9,9 +9,6 @@ export async function POST(req: Request) {
   const cookieStore = cookies();
   const refreshToken = cookieStore.get('refresh_token')?.value;
 
-  console.log('Refresh Token from Cookie:', refreshToken);
-  console.log('REFRESH_TOKEN_SECRET:', REFRESH_TOKEN_SECRET);
-
   if (!refreshToken) {
     return NextResponse.json(
       { message: 'Refresh token not found' },
@@ -20,14 +17,9 @@ export async function POST(req: Request) {
   }
 
   try {
-    // 디코딩 및 검증 디버깅
-    const parts = refreshToken.split('.');
-
     const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET!, {
       algorithms: ['HS256'], // 명시적으로 알고리즘 설정
     }) as jwt.JwtPayload;
-
-    console.log('Decoded Refresh Token:', decoded);
 
     const newAccessToken = jwt.sign(
       { id: decoded.id, role: decoded.role },

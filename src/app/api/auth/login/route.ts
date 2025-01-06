@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
+// TODO: PrismaClient가 매 요청마다 새로 생성되는 문제 해결해야함, 지금은 연습용이라 무시
 const prisma = new PrismaClient();
 const ACCESS_TOKEN_SECRET =
   process.env.ACCESS_TOKEN_SECRET || 'default-access-key';
@@ -46,12 +47,12 @@ export async function POST(req: Request) {
       expiresIn: '7d',
     });
 
-    // `refresh_token`을 쿠키에 저장
     const response = NextResponse.json({
       message: 'Login successful',
       access_token,
     });
 
+    // `refresh_token`을 쿠키에 저장
     response.cookies.set('refresh_token', refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         error: 'Internal server error',
-        details: (error as Error).message || error,
+        details: error instanceof Error ? error.message : String(error),
       },
       { status: 500 },
     );

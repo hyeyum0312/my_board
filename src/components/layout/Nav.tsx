@@ -1,16 +1,17 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Button from '../ui/atom/Button';
 import Link from 'next/link';
 import { useAuthStore } from '../../../stores/authStore';
 
 export default function Nav() {
+  const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+  const logout = useAuthStore((state) => state.logout);
 
   const hideNavPages = new Set([
     '/login',
@@ -25,14 +26,14 @@ export default function Nav() {
   }
 
   const handleLogout = async () => {
-    setLoggedIn(false);
     const response = await fetch('/api/auth/logout', {
       method: 'POST',
       credentials: 'include',
     });
 
     if (response.ok) {
-      window.location.href = '/login';
+      logout(); // 상태 초기화 및 로컬 스토리지 삭제
+      router.push('/login');
     } else {
       console.error('Failed to log out');
     }
