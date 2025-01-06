@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { refreshToken } from '@/lib/api/refresh';
-import { useAuthStore } from '../../../../stores/authStore';
+import { useAuthStore } from '../../../stores/authStore';
 import { usePathname } from 'next/navigation';
 
 export function useAuthSync() {

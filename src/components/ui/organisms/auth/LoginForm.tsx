@@ -5,7 +5,7 @@ import Input from '../../atom/Input';
 import Button from '../../atom/Button';
 import { loginUser } from '@/lib/api/login';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '../../../../../stores/authStore';
+import { useAuthStore } from '../../../../stores/authStore';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });

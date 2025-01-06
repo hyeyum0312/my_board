@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Button from '../ui/atom/Button';
 import Link from 'next/link';
-import { useAuthStore } from '../../../stores/authStore';
+import { useAuthStore } from '../../stores/authStore';
 
 export default function Nav() {
   const router = useRouter();
