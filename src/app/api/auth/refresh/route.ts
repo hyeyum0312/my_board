@@ -22,8 +22,6 @@ export async function POST(req: Request) {
   try {
     // 디코딩 및 검증 디버깅
     const parts = refreshToken.split('.');
-    console.log('Decoded Header:', Buffer.from(parts[0], 'base64').toString());
-    console.log('Decoded Payload:', Buffer.from(parts[1], 'base64').toString());
 
     const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET!, {
       algorithms: ['HS256'], // 명시적으로 알고리즘 설정
