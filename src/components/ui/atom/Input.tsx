@@ -30,36 +30,61 @@ const inputStyles = cva(
 
 type InputProps = {
   id?: string;
+  name?: string;
   size?: 'small' | 'medium' | 'large';
   state?: 'default' | 'error' | 'success';
   disabled?: boolean;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  required?: boolean;
   type?: 'text' | 'email' | 'password' | 'number' | 'date';
+  'aria-describedby'?: string; // 에러 메시지 등과 연결
+  'data-testid'?: string; // 테스트를 위한 ID
 };
 
 export default function Input({
   id,
+  name,
   size = 'medium',
   state = 'default',
   disabled = false,
   placeholder = '',
   value,
   onChange,
+  onBlur,
+  onFocus,
+  required = false,
   type = 'text',
+  'aria-describedby': ariaDescribedby,
+  'data-testid': dataTestId,
 }: InputProps) {
+  if (!id) {
+    console.warn(
+      'Input component is missing an "id" prop. This may affect accessibility.',
+    );
+  }
+
   const classes = inputStyles({ size, state, disabled });
 
   return (
     <input
       type={type}
+      id={id}
+      name={name}
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
+      onFocus={onFocus}
       className={classes}
       placeholder={placeholder}
       disabled={disabled}
-      id={id}
+      aria-invalid={state === 'error'}
+      aria-required={required}
+      aria-describedby={ariaDescribedby}
+      data-testid={dataTestId}
     />
   );
 }
